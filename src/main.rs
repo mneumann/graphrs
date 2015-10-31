@@ -1,3 +1,6 @@
+mod graph;
+mod index_type;
+
 use std::io::{BufReader, BufRead};
 use std::fs::File;
 use std::str::FromStr;
