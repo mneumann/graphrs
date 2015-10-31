@@ -1,4 +1,3 @@
-
 use std::fmt;
 
 /// Code from https://github.com/bluss/petulant-avenger-graphlibrary/blob/master/src/graph.rs.

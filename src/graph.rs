@@ -5,9 +5,26 @@ use std::fmt;
 
 pub trait WeightType: Sized + fmt::Debug + Default + Copy {}
 
+#[derive(Debug, Default, Clone, Copy)]
 pub struct Unweighted;
 
+impl FromStr for Unweighted {
+    type Err = &'static str;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if s.is_empty() {
+            Ok(Unweighted)
+        } else {
+            Err("Invalid Unweighted string")
+        }
+    }
+}
+impl WeightType for Unweighted {}
+
+impl WeightType for f32 {}
+impl WeightType for f64 {}
+
 /// A weighted, multi-edged, directed graph. Edges are represented by a unique index EdgeIx. Nodes by their NodeIx.
+#[derive(Debug)]
 pub struct MDGraph<NodeWt: WeightType = Unweighted,
                    EdgeWt: WeightType = Unweighted,
                    NodeIx: IndexType = DefIndex,
@@ -125,4 +142,12 @@ impl<NodeWt: WeightType, EdgeWt: WeightType, NodeIx: IndexType, EdgeIx: IndexTyp
                         -> &[(NodeIndex<NodeIx>, EdgeIndex<EdgeIx>)] {
         &self.out_edges[node.index()]
     }
+
+    pub fn edge_count(&self) -> usize {
+        self.edge_weights.len()
+    }
+    pub fn node_count(&self) -> usize {
+        self.node_weights.len()
+    }
+
 }
