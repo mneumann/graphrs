@@ -107,6 +107,26 @@ impl<NodeWt: WeightType, EdgeWt: WeightType, NodeIx: IndexType, EdgeIx: IndexTyp
         self.add_edge_with_weight(source, target, EdgeWt::default())
     }
 
+    /// Returns true if `source` has an outgoing edge to `target`.
+    #[inline]
+    pub fn has_out_edge(&self, source: NodeIndex<NodeIx>, target: NodeIndex<NodeIx>) -> bool {
+        self.out_edges_of(source).iter().any(|&(t, _)| target == t)
+    }
+
+    /// Returns true if `target` has an incoming edge from `source`.
+    #[inline]
+    pub fn has_in_edge(&self, target: NodeIndex<NodeIx>, source: NodeIndex<NodeIx>) -> bool {
+        self.in_edges_of(target).iter().any(|&(s, _)| source == s)
+    }
+
+    pub fn has_directed_edge(&self, source: NodeIndex<NodeIx>, target: NodeIndex<NodeIx>) -> bool {
+        if self.out_edges_of(source).len() < self.in_edges_of(target).len() {
+            self.has_out_edge(source, target)
+        } else {
+            self.has_in_edge(target, source)
+        }
+    }
+
     pub fn in_degree(&self, node: NodeIndex<NodeIx>) -> usize {
         self.in_edges[node.index()].len()
     }
