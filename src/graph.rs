@@ -115,6 +115,10 @@ impl<NodeWt: WeightType, EdgeWt: WeightType, NodeIx: IndexType, EdgeIx: IndexTyp
         self.out_edges[node.index()].len()
     }
 
+    pub fn degree(&self, node: NodeIndex<NodeIx>) -> usize {
+        self.in_degree(node) + self.out_degree(node)
+    }
+
     pub fn get_node_weight(&self, node: NodeIndex<NodeIx>) -> &NodeWt {
         &self.node_weights[node.index()]
     }
