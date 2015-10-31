@@ -1,0 +1,8 @@
+[package]
+name = "graphrs"
+version = "0.0.1"
+authors = ["Michael Neumann <mneumann@ntecs.de>"]
+license = "MIT"
+repository = "https://github.com/mneumann/graphrs"
+description = "Graph/network related algorithms/tools"
+keywords = ["graph", "algorithm", "network"]
